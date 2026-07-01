@@ -454,6 +454,190 @@ body {
     opacity: 0.9;
 }
 
+/* Message d'état sous le bouton (succès / erreur), piloté par le JS */
+.auth-msg {
+    margin-top: 14px;
+    padding: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    min-height: 1.2em;
+    transition: opacity 0.2s ease;
+}
+.auth-msg.erreur { color: #b3261e; }
+.auth-msg.succes { color: #1f7a34; }
+
+/* Rappel des comptes de démonstration */
+.auth-demo {
+    margin-top: 16px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #123a66;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px dashed rgba(127, 168, 208, 0.8);
+    border-radius: 6px;
+}
+.auth-demo code {
+    font-family: "Consolas", "Courier New", monospace;
+    background: rgba(12, 47, 90, 0.10);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+}
+
+/* Animation "tremblement" du formulaire en cas d'erreur */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(7px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(3px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/* =================================================================
+   OVERLAYS (succès, BSOD, Aero Overdrive) — plein écran
+   ================================================================= */
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    animation: fadein 0.25s ease;
+}
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.overlay[hidden] { display: none; }
+
+/* ----- Écran de succès (verre Aero vert) ----- */
+.overlay-succes {
+    background: radial-gradient(circle at 50% 30%, rgba(60, 200, 120, 0.35), transparent 60%),
+                rgba(4, 30, 20, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.succes-card {
+    width: min(420px, 100%);
+    text-align: center;
+    padding: 34px 28px;
+    color: #0c3a22;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.succes-check {
+    width: 74px; height: 74px;
+    margin: 0 auto 16px;
+    display: grid; place-items: center;
+    font-size: 38px;
+    color: #fff;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 30%, #7fe6a3, #1f9c52);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.7), 0 4px 10px rgba(31,156,82,0.5);
+    animation: pop 0.4s cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+@keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+.succes-card h2 { font-size: 1.4rem; margin-bottom: 8px; }
+.succes-card p { font-size: 0.9rem; color: #17502f; }
+.succes-barre {
+    height: 8px; margin: 18px 0 6px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.12);
+    overflow: hidden;
+}
+.succes-barre span {
+    display: block; height: 100%;
+    width: 0;
+    background: linear-gradient(to bottom, #9dffce, #2fae4a);
+    animation: remplir 2.4s ease forwards;
+}
+@keyframes remplir { to { width: 100%; } }
+.succes-redir { font-size: 0.78rem !important; opacity: 0.8; }
+.succes-close { max-width: 240px; margin: 18px auto 0; }
+
+/* ----- Faux écran bleu de la mort (BSOD) ----- */
+.bsod {
+    background: #1074c9; /* bleu BSOD Vista/8 */
+    color: #fff;
+    place-items: center;
+    text-align: left;
+}
+.bsod-inner {
+    width: min(680px, 100%);
+    font-family: "Segoe UI", sans-serif;
+}
+.bsod-sad { font-size: clamp(4rem, 12vw, 7rem); font-weight: 300; margin-bottom: 10px; }
+.bsod-txt { font-size: clamp(1rem, 2.5vw, 1.4rem); line-height: 1.5; max-width: 60ch; }
+.bsod-pct { font-size: clamp(1rem, 2.5vw, 1.4rem); margin: 22px 0; }
+.bsod-code {
+    font-size: clamp(0.75rem, 1.6vw, 0.95rem);
+    line-height: 1.6;
+    opacity: 0.92;
+}
+.bsod-code span { font-family: "Consolas", monospace; }
+
+/* ----- Aero Overdrive (message secret + pluie de logos) ----- */
+.overdrive {
+    background: rgba(5, 15, 40, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    overflow: hidden;
+}
+.overdrive-msg {
+    position: relative;
+    z-index: 3;
+    width: min(460px, 100%);
+    text-align: center;
+    padding: 34px 28px;
+    color: #eaf3ff;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    animation: spin3d 0.9s ease;
+}
+@keyframes spin3d {
+    from { transform: perspective(800px) rotateY(90deg) scale(0.6); opacity: 0; }
+    to   { transform: perspective(800px) rotateY(0)     scale(1);   opacity: 1; }
+}
+.overdrive-msg h2 { font-size: 1.5rem; margin: 12px 0 8px; }
+.overdrive-msg p  { font-size: 0.92rem; line-height: 1.5; margin-bottom: 18px; }
+.overdrive-msg .btn-connexion { max-width: 240px; margin: 0 auto; }
+.logo-vista.big {
+    width: 64px; height: 64px; gap: 4px;
+    margin: 0 auto;
+}
+
+/* Un "confetti" = un logo Vista qui tombe (créé par le JS) */
+.confetti {
+    position: fixed;
+    top: -60px;
+    z-index: 1;
+    width: 26px; height: 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    pointer-events: none;
+    animation: chute linear forwards;
+}
+@keyframes chute {
+    to { transform: translateY(110vh) rotate(540deg); }
+}
+
+/* Mode fête appliqué au bureau : teinte qui pulse en arrière-plan */
+body.party .bureau { animation: partyhue 3s linear infinite; }
+@keyframes partyhue {
+    0%   { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
 /* =================================================================
    BARRE DES TÂCHES ZINDOZS VISTA (fixée en bas, verre Aero noir)
    ================================================================= */

@@ -138,7 +138,17 @@
                         <button type="submit" class="btn-connexion">
                             Se connecter à Internet
                         </button>
+
+                        <!-- Zone de message d'état (remplie par le JS) -->
+                        <p id="auth-msg" class="auth-msg" role="status" aria-live="polite"></p>
                     </form>
+
+                    <!-- Rappel des identifiants de démonstration -->
+                    <p class="auth-demo">
+                        <strong>Comptes de démonstration :</strong><br>
+                        invité <code>invite</code> / <code>1234</code> &nbsp;·&nbsp;
+                        admin <code>admin</code> / <code>infratech</code>
+                    </p>
 
                     <p class="auth-aide">
                         Problème de connexion ? Contactez l'accueil au poste <strong>#4000</strong>.
@@ -185,6 +195,55 @@
             </div>
         </div>
     </nav>
+
+    <!-- ============================================================= -->
+    <!-- OVERLAYS (affichés par le JS)                                  -->
+    <!-- ============================================================= -->
+
+    <!-- Écran de succès "Accès accordé" (verre Aero vert) -->
+    <div class="overlay overlay-succes" id="overlay-succes" hidden>
+        <div class="succes-card">
+            <div class="succes-check" aria-hidden="true">&#10004;</div>
+            <h2>Accès à Internet accordé</h2>
+            <p id="succes-user">Bienvenue sur le réseau Infratech‑Guest.</p>
+            <div class="succes-barre"><span></span></div>
+            <p class="succes-redir">Redirection vers votre page d'accueil…</p>
+            <button class="btn-connexion succes-close" id="succes-close">Fermer la session</button>
+        </div>
+    </div>
+
+    <!-- Faux écran bleu de la mort (BSOD) façon Vista -->
+    <div class="overlay bsod" id="bsod" hidden>
+        <div class="bsod-inner">
+            <p class="bsod-sad">:(</p>
+            <p class="bsod-txt">
+                Votre PC a rencontré un problème et doit redémarrer.
+                Nous collectons simplement quelques informations d'erreur,
+                puis le portail redémarrera.
+            </p>
+            <p class="bsod-pct" id="bsod-pct">0% terminé</p>
+            <p class="bsod-code">
+                Code d'arrêt&nbsp;: <span>ZINDOZS_AERO_OVERDRIVE</span><br>
+                Si vous appelez un technicien, communiquez‑lui ce code.
+            </p>
+        </div>
+    </div>
+
+    <!-- Couche "AERO OVERDRIVE" : pluie de logos + message secret -->
+    <div class="overlay overdrive" id="overdrive" hidden>
+        <div class="overdrive-msg">
+            <span class="logo-vista big" aria-hidden="true">
+                <span class="carreau c1"></span>
+                <span class="carreau c2"></span>
+                <span class="carreau c3"></span>
+                <span class="carreau c4"></span>
+            </span>
+            <h2>AERO OVERDRIVE débloqué !</h2>
+            <p>Vous avez trouvé l'easter egg du portail Zindozs&nbsp;Vista. 🎉<br>
+               Profitez du meilleur effet « verre » jamais conçu en 2007.</p>
+            <button class="btn-connexion" id="overdrive-close">Revenir au bureau</button>
+        </div>
+    </div>
 
     <!-- Petit script non essentiel : horloge live du tray + gadget -->
     <script src="script.js"></script>
