@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zindozs Vista — Portail Captif Infratech-Guest</title>
+    <!-- Police Segoe UI Vista + fallback web -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ============================================================= -->
+    <!-- "BUREAU" ZINDOZS VISTA : tout le portail est mis en scène      -->
+    <!-- comme un poste de travail (wallpaper Aurora + taskbar).        -->
+    <!-- ============================================================= -->
+    <div class="bureau">
+
+        <!-- Petites gadgets flottants du "Sidebar" Vista (déco desktop) -->
+        <aside class="sidebar" aria-hidden="true">
+            <!-- Gadget horloge -->
+            <div class="gadget gadget-horloge">
+                <div class="cadran">
+                    <span class="aiguille aig-h"></span>
+                    <span class="aiguille aig-m"></span>
+                    <span class="pivot"></span>
+                </div>
+                <p class="gadget-label">Infratech Time</p>
+            </div>
+            <!-- Gadget réseau / débit -->
+            <div class="gadget gadget-reseau">
+                <p class="gadget-titre">Réseau invité</p>
+                <div class="jauge"><span style="width:82%"></span></div>
+                <p class="gadget-sous">Infratech-Guest · 82%</p>
+            </div>
+        </aside>
+
+        <!-- ========================================================= -->
+        <!-- FENÊTRE PRINCIPALE (Aero Glass) : le portail captif         -->
+        <!-- ========================================================= -->
+        <main class="fenetre" role="dialog" aria-labelledby="titre-portail">
+
+            <!-- ----- Barre de titre Vista : logo + titre + boutons ----- -->
+            <div class="titlebar">
+                <div class="titlebar-gauche">
+                    <!-- Logo "drapeau" Zindozs Vista (4 carreaux ondulés) -->
+                    <span class="logo-vista" aria-hidden="true">
+                        <span class="carreau c1"></span>
+                        <span class="carreau c2"></span>
+                        <span class="carreau c3"></span>
+                        <span class="carreau c4"></span>
+                    </span>
+                    <span class="titlebar-texte">Zindozs&nbsp;Vista — Accès Wi‑Fi Invité</span>
+                </div>
+                <!-- Boutons fenêtre réduire / agrandir / fermer -->
+                <div class="titlebar-boutons" aria-hidden="true">
+                    <button class="win-btn min" title="Réduire">&#8211;</button>
+                    <button class="win-btn max" title="Agrandir">&#9633;</button>
+                    <button class="win-btn close" title="Fermer">&#10005;</button>
+                </div>
+            </div>
+
+            <!-- ----- Corps de la fenêtre : 2 colonnes en desktop ----- -->
+            <div class="portail">
+
+                <!-- ===================================================== -->
+                <!-- COLONNE GAUCHE : illustration corporate + consignes    -->
+                <!-- Masquée en display:none sur smartphone (perf mobile).  -->
+                <!-- ===================================================== -->
+                <section class="illustration">
+                    <!-- Bandeau de marque -->
+                    <div class="illu-marque">
+                        <span class="illu-cadenas" aria-hidden="true">&#128274;</span>
+                        <div>
+                            <h1 id="titre-portail" class="illu-titre">Infratech&nbsp;Data&nbsp;Center</h1>
+                            <p class="illu-sous">Réseau Wi‑Fi invités sécurisé</p>
+                        </div>
+                    </div>
+
+                    <!-- Rappel visuel des consignes de sécurité physique -->
+                    <h2 class="illu-h2">Consignes de sécurité physique</h2>
+                    <ul class="consignes">
+                        <li>
+                            <span class="ic" aria-hidden="true">&#128179;</span>
+                            <span>Portez votre <strong>badge visiteur</strong> visible en permanence dans l'enceinte du Data&nbsp;Center.</span>
+                        </li>
+                        <li>
+                            <span class="ic" aria-hidden="true">&#128683;</span>
+                            <span>Aucune <strong>photographie</strong> des baies, du câblage ou des écrans n'est autorisée.</span>
+                        </li>
+                        <li>
+                            <span class="ic" aria-hidden="true">&#128101;</span>
+                            <span>Ne laissez <strong>jamais entrer</strong> une personne non accréditée derrière vous (anti‑<em>tailgating</em>).</span>
+                        </li>
+                        <li>
+                            <span class="ic" aria-hidden="true">&#128293;</span>
+                            <span>En cas d'alarme, suivez le <strong>plan d'évacuation</strong> affiché près de chaque issue.</span>
+                        </li>
+                    </ul>
+
+                    <p class="illu-note">
+                        L'accès à Internet est conditionné à l'acceptation de la charte informatique
+                        de l'entreprise.
+                    </p>
+                </section>
+
+                <!-- ===================================================== -->
+                <!-- COLONNE DROITE : formulaire d'authentification         -->
+                <!-- Toujours visible (desktop + mobile).                   -->
+                <!-- ===================================================== -->
+                <section class="auth">
+                    <h2 class="auth-titre">Connexion au portail captif</h2>
+                    <p class="auth-intro">
+                        Authentifiez‑vous avec votre identifiant ou le code temporaire
+                        remis à l'accueil.
+                    </p>
+
+                    <form class="auth-form" action="#" method="post">
+                        <!-- Champ identifiant -->
+                        <label for="login">Identifiant / e‑mail</label>
+                        <input type="text" id="login" name="login"
+                               placeholder="prenom.nom@invite.fr"
+                               autocomplete="username" required>
+
+                        <!-- Champ mot de passe / code temporaire -->
+                        <label for="code">Mot de passe ou code temporaire</label>
+                        <input type="password" id="code" name="code"
+                               placeholder="••••••••"
+                               autocomplete="current-password" required>
+
+                        <!-- Acceptation de la charte : zone de contact large -->
+                        <label class="charte" for="charte">
+                            <input type="checkbox" id="charte" name="charte" required>
+                            <span>J'ai lu et j'accepte la <a href="#">charte informatique</a>
+                            et la politique d'usage du réseau invité.</span>
+                        </label>
+
+                        <!-- Bouton de soumission (glossy Aero, min 44px tactile) -->
+                        <button type="submit" class="btn-connexion">
+                            Se connecter à Internet
+                        </button>
+                    </form>
+
+                    <p class="auth-aide">
+                        Problème de connexion ? Contactez l'accueil au poste <strong>#4000</strong>.
+                    </p>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- BARRE DES TÂCHES ZINDOZS VISTA (fixée en bas de l'écran)       -->
+    <!-- ============================================================= -->
+    <nav class="taskbar" aria-label="Barre des tâches">
+        <!-- Orbe "Démarrer" avec le drapeau Vista -->
+        <button class="orbe" title="Démarrer">
+            <span class="orbe-logo" aria-hidden="true">
+                <span class="carreau c1"></span>
+                <span class="carreau c2"></span>
+                <span class="carreau c3"></span>
+                <span class="carreau c4"></span>
+            </span>
+        </button>
+
+        <!-- Barre de lancement rapide / fenêtres ouvertes -->
+        <div class="taskbar-apps">
+            <button class="task-app active" title="Portail Captif">
+                <span class="task-ic" aria-hidden="true">&#128246;</span>
+                <span class="task-label">Portail Captif — Infratech‑Guest</span>
+            </button>
+            <button class="task-app" title="Charte informatique">
+                <span class="task-ic" aria-hidden="true">&#128196;</span>
+                <span class="task-label">Charte.pdf</span>
+            </button>
+        </div>
+
+        <!-- Zone de notification (tray) : réseau, volume, horloge -->
+        <div class="tray">
+            <span class="tray-ic" title="Réseau Wi‑Fi" aria-hidden="true">&#128246;</span>
+            <span class="tray-ic" title="Volume" aria-hidden="true">&#128266;</span>
+            <span class="tray-ic secu" title="Sécurité" aria-hidden="true">&#128737;</span>
+            <div class="tray-horloge">
+                <span class="tray-heure" id="tray-heure">06:12</span>
+                <span class="tray-date" id="tray-date">01/07/2026</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Petit script non essentiel : horloge live du tray + gadget -->
+    <script src="script.js"></script>
+</body>
+</html>

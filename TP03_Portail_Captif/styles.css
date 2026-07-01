@@ -1,0 +1,643 @@
+/* =================================================================
+   STYLES.CSS — TP03 : Portail Captif Wi-Fi "Infratech-Guest"
+   Thème : Windows Vista "Aero Glass" POUSSÉ (bureau complet,
+   barre des tâches, orbe Démarrer, logo Zindozs Vista, gadgets
+   Sidebar, fenêtre à barre de titre).
+
+   Points pédagogiques mis en avant :
+   - @media (Media Queries) : double affichage Desktop / Mobile
+   - display:none : masquage de la colonne illustration sur mobile
+   - Zone tactile >= 44px + font-size >= 16px sur les champs mobiles
+   - clamp() : typographie fluide (titre + consignes)
+   ================================================================= */
+
+/* ---------- Remise à zéro ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* -----------------------------------------------------------------
+   BUREAU : wallpaper "Aurora" Vista (dégradés lumineux superposés).
+   La barre des tâches fait 48px : on réserve la place en bas.
+   ----------------------------------------------------------------- */
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: "Segoe UI", "Segoe UI Web", Tahoma, Geneva, Verdana, sans-serif;
+    color: #10233b;
+    min-height: 100vh;
+    /* Superposition de lueurs colorées + dégradé bleu profond Vista */
+    background:
+        radial-gradient(circle at 18% 12%, rgba(140, 210, 255, 0.60), transparent 42%),
+        radial-gradient(circle at 82% 88%, rgba(90, 255, 210, 0.32), transparent 40%),
+        radial-gradient(circle at 60% 40%, rgba(180, 160, 255, 0.22), transparent 55%),
+        linear-gradient(160deg, #2e7bd6 0%, #14508f 45%, #05193a 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+/* Zone bureau : centre la fenêtre, laisse la place à la taskbar (48px) */
+.bureau {
+    min-height: 100vh;
+    padding: clamp(12px, 4vw, 48px);
+    padding-bottom: 72px; /* place pour la barre des tâches */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* =================================================================
+   SIDEBAR VISTA (gadgets décoratifs, coin haut-droit du bureau)
+   ================================================================= */
+.sidebar {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 1;
+}
+
+.gadget {
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 12px;
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    padding: 12px;
+    text-align: center;
+    color: #eaf3ff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.gadget-label,
+.gadget-sous {
+    font-size: 11px;
+    margin-top: 8px;
+    opacity: 0.9;
+}
+
+.gadget-titre {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Horloge analogique du gadget */
+.cadran {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,0.9), rgba(210,230,255,0.6) 60%, rgba(120,160,210,0.6));
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+}
+.aiguille {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform-origin: bottom center;
+    background: #17324f;
+    border-radius: 2px;
+}
+.aig-h { width: 4px; height: 24px; margin-left: -2px; }
+.aig-m { width: 2px; height: 34px; margin-left: -1px; background:#2f6bb0; }
+.pivot {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 8px; height: 8px;
+    margin: -4px 0 0 -4px;
+    background: #17324f;
+    border-radius: 50%;
+}
+
+/* Jauge de débit réseau */
+.jauge {
+    height: 10px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.25);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+.jauge span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(to bottom, #9dffce, #35c96f);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+}
+
+/* =================================================================
+   FENÊTRE PRINCIPALE (Aero Glass)
+   ================================================================= */
+.fenetre {
+    width: min(960px, 100%);
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 14px;
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+
+/* Reflet vitré sur la moitié haute de la fenêtre */
+.fenetre::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 42%;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.40),
+        rgba(255, 255, 255, 0));
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* -----------------------------------------------------------------
+   BARRE DE TITRE VISTA : logo Zindozs + titre + boutons fenêtre
+   ----------------------------------------------------------------- */
+.titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.45),
+        rgba(150, 205, 255, 0.28));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    z-index: 4;
+}
+
+.titlebar-gauche {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.titlebar-texte {
+    color: #0c2f5a;
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ----- Logo "drapeau" Zindozs Vista : 4 carreaux façon Windows ----- */
+.logo-vista {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    transform: perspective(120px) rotateY(-12deg) rotateZ(-4deg);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+.carreau {
+    border-radius: 3px 3px 4px 4px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -2px 3px rgba(0,0,0,0.15);
+}
+/* Les 4 couleurs emblématiques (rouge / vert / bleu / jaune) */
+.c1 { background: linear-gradient(135deg, #ff8a8a, #e23b3b); }
+.c2 { background: linear-gradient(135deg, #9bffa4, #2fae4a); }
+.c3 { background: linear-gradient(135deg, #8cc9ff, #1f74d6); }
+.c4 { background: linear-gradient(135deg, #ffe185, #f2b721); }
+
+/* ----- Boutons réduire / agrandir / fermer ----- */
+.titlebar-boutons {
+    display: flex;
+    gap: 6px;
+}
+.win-btn {
+    width: 30px;
+    height: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    font-size: 12px;
+    color: #0c2f5a;
+    cursor: pointer;
+    background: linear-gradient(to bottom,
+        rgba(255,255,255,0.7), rgba(180,215,255,0.5));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.win-btn:hover { background: linear-gradient(to bottom, #cfe6ff, #9cc6f5); }
+.win-btn.close {
+    background: linear-gradient(to bottom, #ff8f7a, #e2452c);
+    color: #fff;
+    border-color: #b8321d;
+}
+.win-btn.close:hover { background: linear-gradient(to bottom, #ffa694, #f0553c); }
+
+/* =================================================================
+   CORPS DU PORTAIL : GRILLE 2 COLONNES (illustration + formulaire)
+   ================================================================= */
+.portail {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    position: relative;
+    z-index: 4;
+}
+
+/* -----------------------------------------------------------------
+   COLONNE GAUCHE : illustration corporate + consignes de sécurité
+   ----------------------------------------------------------------- */
+.illustration {
+    padding: clamp(20px, 3vw, 34px);
+    color: #eaf3ff;
+    /* Fond "affiche corporate" : dégradé bleu nuit + lueur */
+    background:
+        radial-gradient(circle at 25% 20%, rgba(120, 200, 255, 0.35), transparent 45%),
+        linear-gradient(160deg, rgba(20, 70, 130, 0.75), rgba(5, 25, 58, 0.82));
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+    border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.illu-marque {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+.illu-cadenas {
+    font-size: 34px;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+}
+
+/* clamp() : titre du portail fluide de 22px à 34px selon la largeur */
+.illu-titre {
+    font-size: clamp(1.35rem, 1rem + 2.2vw, 2.15rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.2px;
+}
+.illu-sous {
+    font-size: clamp(0.8rem, 0.72rem + 0.4vw, 0.95rem);
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.illu-h2 {
+    /* clamp() aussi sur le sous-titre des consignes */
+    font-size: clamp(1rem, 0.9rem + 0.6vw, 1.25rem);
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Liste des consignes de sécurité physique */
+.consignes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.consignes li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    /* clamp() : corps de texte des consignes fluide */
+    font-size: clamp(0.85rem, 0.78rem + 0.45vw, 1rem);
+    line-height: 1.4;
+}
+.consignes .ic {
+    flex: 0 0 auto;
+    font-size: 20px;
+    line-height: 1.2;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+}
+.consignes strong { color: #ffffff; }
+.consignes em { color: #ffe185; font-style: normal; font-weight: 600; }
+
+.illu-note {
+    margin-top: 24px;
+    padding: 12px 14px;
+    font-size: clamp(0.78rem, 0.72rem + 0.35vw, 0.9rem);
+    background: rgba(0, 0, 0, 0.22);
+    border-left: 3px solid #ffe185;
+    border-radius: 4px;
+}
+
+/* -----------------------------------------------------------------
+   COLONNE DROITE : formulaire d'authentification
+   ----------------------------------------------------------------- */
+.auth {
+    padding: clamp(20px, 3vw, 34px);
+    background: rgba(255, 255, 255, 0.30);
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-titre {
+    color: #0c2f5a;
+    /* clamp() sur le titre du formulaire */
+    font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.3rem);
+    font-weight: 700;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.auth-intro {
+    color: #123a66;
+    font-size: 0.9rem;
+    margin: 8px 0 20px;
+    line-height: 1.45;
+}
+
+.auth-form label {
+    display: block;
+    margin: 14px 0 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #123a66;
+}
+
+/* Champs "vitrés" enfoncés (input texte + mot de passe) */
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+    width: 100%;
+    /* Ergonomie tactile : hauteur >= 44px, police >= 16px */
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 1rem;                 /* 16px : empêche le zoom iOS Safari */
+    color: #10233b;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #7fa8d0;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.18);
+    outline: none;
+}
+.auth-form input[type="text"]:focus,
+.auth-form input[type="password"]:focus {
+    border-color: #2e7bd6;
+    box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.18),
+        0 0 8px rgba(46, 123, 214, 0.75); /* halo bleu Aero au focus */
+}
+
+/* Acceptation de la charte : grande zone de contact cliquable */
+.charte {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 18px !important;
+    padding: 10px 12px;
+    min-height: 44px;
+    font-weight: 400 !important;
+    font-size: 0.85rem;
+    color: #123a66;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(127, 168, 208, 0.7);
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 1.4;
+}
+.charte input[type="checkbox"] {
+    /* Case à cocher agrandie pour le tactile */
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    flex: 0 0 auto;
+    accent-color: #2f86e6;
+    cursor: pointer;
+}
+.charte a { color: #1a5aa8; font-weight: 600; }
+
+/* ----- Bouton "glossy" Aero (min 44px, tactile) ----- */
+.btn-connexion {
+    width: 100%;
+    min-height: 48px;         /* confortable au pouce (> 44px) */
+    margin-top: 24px;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    border: 1px solid #1a5aa8;
+    border-radius: 8px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom,
+        #6fb7ff 0%, #2f86e6 48%, #1d63c4 52%, #2a7ae0 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 3px 6px rgba(0, 0, 0, 0.35);
+}
+.btn-connexion:hover {
+    background: linear-gradient(to bottom,
+        #8ac7ff 0%, #4197f2 48%, #2a72d4 52%, #3a88ee 100%);
+}
+.btn-connexion:active {
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.auth-aide {
+    margin-top: auto;
+    padding-top: 20px;
+    font-size: 0.8rem;
+    color: #123a66;
+    opacity: 0.9;
+}
+
+/* =================================================================
+   BARRE DES TÂCHES ZINDOZS VISTA (fixée en bas, verre Aero noir)
+   ================================================================= */
+.taskbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 8px 0 0;
+    background: linear-gradient(to bottom,
+        rgba(70, 120, 180, 0.55) 0%,
+        rgba(15, 40, 75, 0.78) 40%,
+        rgba(5, 20, 45, 0.88) 100%);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+}
+
+/* ----- Orbe "Démarrer" rond et brillant ----- */
+.orbe {
+    flex: 0 0 auto;
+    width: 54px;
+    height: 54px;
+    margin: -6px 6px -6px -2px; /* déborde légèrement au-dessus de la barre */
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    background:
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.9), transparent 45%),
+        radial-gradient(circle at 50% 60%, #2f86e6, #0c3b78 75%);
+    box-shadow:
+        0 0 12px rgba(90, 170, 255, 0.8),
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.4);
+    display: grid;
+    place-items: center;
+    transition: box-shadow 0.15s ease;
+}
+.orbe:hover {
+    box-shadow:
+        0 0 20px rgba(120, 190, 255, 1),
+        inset 0 2px 4px rgba(255, 255, 255, 0.7),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.4);
+}
+/* Logo dans l'orbe (mêmes 4 carreaux, taille réduite) */
+.orbe-logo {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    transform: perspective(100px) rotateY(-14deg);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+
+/* ----- Fenêtres / apps épinglées ----- */
+.taskbar-apps {
+    display: flex;
+    gap: 6px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.task-app {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 240px;
+    padding: 6px 12px;
+    height: 34px;
+    cursor: pointer;
+    color: #eaf3ff;
+    font-size: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    background: linear-gradient(to bottom,
+        rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    overflow: hidden;
+}
+.task-app.active {
+    background: linear-gradient(to bottom,
+        rgba(150,205,255,0.45), rgba(60,120,190,0.35));
+    border-color: rgba(255,255,255,0.5);
+}
+.task-app:hover { background: linear-gradient(to bottom,
+        rgba(180,220,255,0.4), rgba(90,150,210,0.3)); }
+.task-ic { font-size: 15px; }
+.task-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ----- Zone de notification (tray) ----- */
+.tray {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+.tray-ic { font-size: 15px; color: #dcebff; cursor: default; }
+.tray-ic.secu { color: #9dffce; }
+.tray-horloge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    color: #eaf3ff;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
+.tray-heure { font-size: 13px; font-weight: 600; }
+.tray-date { font-size: 10px; opacity: 0.85; }
+
+/* =================================================================
+   RESPONSIVE DESIGN (Media Queries)
+   ================================================================= */
+
+/* ---------- TABLETTE : jusqu'à 900px ---------- */
+@media (max-width: 900px) {
+    /* La grille repasse sur une seule colonne */
+    .portail {
+        grid-template-columns: 1fr;
+    }
+    .illustration {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    /* On masque la Sidebar (gadgets) pour aérer l'écran */
+    .sidebar { display: none; }
+}
+
+/* ---------- SMARTPHONE : jusqu'à 600px ---------- */
+@media (max-width: 600px) {
+    /*
+       SPÉCIFICATION CLÉ DU TP :
+       On MASQUE totalement la colonne d'illustration (display:none)
+       pour préserver la bande passante mobile et accélérer le
+       chargement. Seul le formulaire d'authentification reste visible.
+    */
+    .illustration {
+        display: none;
+    }
+
+    .bureau {
+        padding: 10px;
+        padding-bottom: 64px;
+        align-items: stretch;
+    }
+    .fenetre {
+        width: 100%;
+        border-radius: 12px;
+    }
+    .auth {
+        padding: 20px 18px;
+    }
+
+    /* Ergonomie tactile renforcée : on garantit >= 44px et 16px */
+    .auth-form input[type="text"],
+    .auth-form input[type="password"] {
+        min-height: 48px;
+        font-size: 1rem;   /* 16px : bloque le zoom auto iOS Safari */
+    }
+    .btn-connexion {
+        min-height: 52px;
+        font-size: 1.05rem;
+    }
+
+    /* La barre des tâches se compacte : on cache les libellés d'apps */
+    .task-label { display: none; }
+    .task-app { max-width: none; padding: 6px 10px; }
+    .tray-ic { font-size: 14px; }
+}
+
+/* ---------- TRÈS PETIT ÉCRAN : jusqu'à 380px ---------- */
+@media (max-width: 380px) {
+    .titlebar-texte { font-size: 12px; }
+    .titlebar-boutons .min,
+    .titlebar-boutons .max { display: none; } /* on ne garde que Fermer */
+}
