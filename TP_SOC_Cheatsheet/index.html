@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console SOC - Security Events</title>
+    <!-- On relie notre feuille de style externe -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ============================================= -->
+    <!-- HEADER : identité de la console de sécurité   -->
+    <!-- ============================================= -->
+    <header class="header">
+        <!-- Titre positionné à gauche (voir Flexbox dans le CSS) -->
+        <h1>SOC Security Events</h1>
+
+        <!-- Indicateurs de performance alignés à droite -->
+        <ul class="kpi">
+            <li>EPS : 1 240</li>
+            <li>Base de données : <span class="ok">EN LIGNE</span></li>
+        </ul>
+    </header>
+
+    <!-- ============================================= -->
+    <!-- MAIN : grille à 2 colonnes (aside + section)  -->
+    <!-- ============================================= -->
+    <main class="main">
+
+        <!-- ----- Panneau latéral gauche : les filtres ----- -->
+        <aside class="aside">
+            <h2>Filtres de recherche</h2>
+
+            <!-- Formulaire de filtrage (section Forms de la cheat sheet).
+                 Le filtrage est géré par script.js (preventDefault + filtrer). -->
+            <form>
+                <!-- 1. Champ texte pour filtrer par IP source -->
+                <label for="ip">Adresse IP source</label>
+                <input type="text" id="ip" name="ip" placeholder="ex : 185.220.101.5">
+
+                <!-- 2. Menu déroulant du niveau de criticité -->
+                <label for="criticite">Niveau de criticité</label>
+                <select id="criticite" name="criticite">
+                    <option value="toutes">Toutes</option>
+                    <option value="critique">Critique</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                </select>
+
+                <!-- 3. Bouton de soumission pour appliquer les filtres -->
+                <input type="submit" value="Appliquer les filtres">
+            </form>
+        </aside>
+
+        <!-- ----- Section centrale : tableau des événements ----- -->
+        <section class="events">
+            <h2>Événements SIEM</h2>
+
+            <!-- Tableau (section Tables de la cheat sheet) -->
+            <table>
+                <!-- En-tête du tableau -->
+                <thead>
+                    <tr>
+                        <th>Horodatage</th>
+                        <th>ID Événement</th>
+                        <th>IP Source</th>
+                        <th>Type d'Attaque</th>
+                        <th>Action Pare-feu</th>
+                    </tr>
+                </thead>
+
+                <!-- Corps du tableau : au moins 3 lignes d'exemples.
+                     L'attribut data-criticite sert au filtrage JavaScript. -->
+                <tbody>
+                    <tr data-criticite="warning">
+                        <td>06:12:04</td>
+                        <td>EVT-942</td>
+                        <td>185.220.101.5</td>
+                        <td>Brute Force SSH</td>
+                        <td class="bloque">Bloqué</td>
+                    </tr>
+                    <tr data-criticite="info">
+                        <td>06:13:47</td>
+                        <td>EVT-943</td>
+                        <td>91.240.118.222</td>
+                        <td>Scan de ports</td>
+                        <td class="bloque">Bloqué</td>
+                    </tr>
+                    <tr data-criticite="critique">
+                        <td>06:15:19</td>
+                        <td>EVT-944</td>
+                        <td>45.155.205.233</td>
+                        <td>Injection SQL</td>
+                        <td class="autorise">Autorisé</td>
+                    </tr>
+                    <tr data-criticite="critique">
+                        <td>06:16:58</td>
+                        <td>EVT-945</td>
+                        <td>103.208.220.10</td>
+                        <td>Déni de service (DoS)</td>
+                        <td class="bloque">Bloqué</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Message affiché par le JS si aucun événement ne correspond au filtre -->
+            <p id="aucun-resultat" class="aucun-resultat">Aucun événement ne correspond à ces filtres.</p>
+        </section>
+    </main>
+
+    <!-- ============================================= -->
+    <!-- FOOTER : statut de conformité SecOps          -->
+    <!-- ============================================= -->
+    <footer class="footer">
+        <p>Statut de conformité SecOps : <span class="ok">CONFORME</span> — Dernière analyse le 01/07/2026</p>
+    </footer>
+
+    <!-- Script qui rend les filtres fonctionnels -->
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+/* =================================================================
+   STYLES.CSS - Console de sécurité SOC
+   Thème : Windows Vista "Aero Glass" (verre translucide, reflets,
+   dégradés bleutés brillants). Style rétro mais soigné.
+   ================================================================= */
+
+/* Remise à zéro simple */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* -----------------------------------------------------------------
+   FOND : dégradé façon bureau Windows Vista (bleu ciel -> bleu nuit)
+   Segoe UI = la police emblématique de Vista.
+   ----------------------------------------------------------------- */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #10233b;
+    min-height: 100vh;
+    padding: 20px;
+    /* Plusieurs dégradés superposés = lumière + profondeur "Aurora" */
+    background:
+        radial-gradient(circle at 20% 15%, rgba(120, 200, 255, 0.55), transparent 45%),
+        radial-gradient(circle at 85% 90%, rgba(90, 255, 210, 0.30), transparent 40%),
+        linear-gradient(160deg, #2e7bd6 0%, #14508f 45%, #061b3a 100%);
+    background-attachment: fixed;
+}
+
+/* -----------------------------------------------------------------
+   EFFET VERRE (Aero Glass) commun à toutes les "fenêtres"
+   Translucidité + flou d'arrière-plan + reflet brillant en haut.
+   ----------------------------------------------------------------- */
+.header,
+.aside,
+.events,
+.footer {
+    /* Fond blanc semi-transparent = le "verre" */
+    background: rgba(255, 255, 255, 0.22);
+    /* Flou de ce qu'il y a derrière = signature de l'effet Aero */
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    /* Bordure claire + coins arrondis typiques de Vista */
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 10px;
+    /* Ombre extérieure douce + léger reflet intérieur en haut */
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Le fameux "reflet vitré" : bande lumineuse sur la moitié haute */
+.header::before,
+.aside::before,
+.events::before,
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.45),
+        rgba(255, 255, 255, 0)
+    );
+    pointer-events: none; /* le reflet ne gêne pas les clics */
+}
+
+/* -----------------------------------------------------------------
+   HEADER (barre de titre) : Flexbox = titre à gauche, KPI à droite
+   ----------------------------------------------------------------- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 26px;
+    /* Barre de titre un peu plus "bleutée" que le reste */
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.35),
+        rgba(160, 210, 255, 0.22));
+}
+
+.header h1 {
+    color: #0c2f5a;
+    font-size: 23px;
+    font-weight: 600;
+    /* Léger relief lumineux sur le texte */
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Liste des indicateurs KPI, alignée horizontalement à droite */
+.kpi {
+    list-style: none;
+    display: flex;
+    gap: 22px;
+    font-size: 14px;
+    color: #0c2f5a;
+}
+
+/* -----------------------------------------------------------------
+   GRILLE PRINCIPALE : aside (300px) + tableau (1fr), gap 20px
+   ----------------------------------------------------------------- */
+.main {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.aside,
+.events {
+    padding: 20px;
+}
+
+/* Titres de section */
+.aside h2,
+.events h2 {
+    color: #0c2f5a;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(12, 47, 90, 0.25);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* -----------------------------------------------------------------
+   FORMULAIRE DE FILTRAGE
+   ----------------------------------------------------------------- */
+form label {
+    display: block;
+    margin: 14px 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #123a66;
+}
+
+/* Champ texte + menu : petits "champs vitrés" enfoncés */
+form input[type="text"],
+form select {
+    width: 100%;
+    padding: 9px 10px;
+    font-size: 14px;
+    color: #10233b;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid #7fa8d0;
+    border-radius: 5px;
+    /* Ombre intérieure = impression de champ "creusé" */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.18);
+    outline: none;
+}
+
+form input[type="text"]:focus,
+form select:focus {
+    border-color: #2e7bd6;
+    box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.18),
+        0 0 6px rgba(46, 123, 214, 0.7); /* halo bleu Vista au focus */
+}
+
+/* -----------------------------------------------------------------
+   BOUTON "GLOSSY" style Aero : dégradé bleu brillant + reflet
+   ----------------------------------------------------------------- */
+form input[type="submit"] {
+    width: 100%;
+    margin-top: 22px;
+    padding: 11px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    border: 1px solid #1a5aa8;
+    border-radius: 6px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    /* Dégradé "brillant/mat" : clair en haut, foncé en bas */
+    background: linear-gradient(to bottom,
+        #6fb7ff 0%,
+        #2f86e6 48%,
+        #1d63c4 52%,
+        #2a7ae0 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+form input[type="submit"]:hover {
+    background: linear-gradient(to bottom,
+        #8ac7ff 0%,
+        #4197f2 48%,
+        #2a72d4 52%,
+        #3a88ee 100%);
+}
+
+form input[type="submit"]:active {
+    /* Effet "enfoncé" au clic */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* -----------------------------------------------------------------
+   TABLEAU DES ÉVÉNEMENTS SIEM
+   ----------------------------------------------------------------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-align: left;
+    padding: 11px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    /* En-tête bleu brillant assorti au bouton */
+    background: linear-gradient(to bottom,
+        rgba(90, 160, 235, 0.95),
+        rgba(30, 95, 175, 0.95));
+}
+
+tbody td {
+    padding: 10px;
+    font-size: 13px;
+    color: #10233b;
+    border-bottom: 1px solid rgba(12, 47, 90, 0.18);
+}
+
+/* Lignes alternées (zébrées) pour la lisibilité */
+tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+tbody tr:hover {
+    background: rgba(120, 190, 255, 0.35);
+}
+
+/* Petit repère de criticité coloré à gauche de chaque ligne */
+tbody tr[data-criticite="critique"] td:first-child {
+    border-left: 4px solid #d64545;
+}
+tbody tr[data-criticite="warning"] td:first-child {
+    border-left: 4px solid #e0a020;
+}
+tbody tr[data-criticite="info"] td:first-child {
+    border-left: 4px solid #2e9bd6;
+}
+
+/* Couleurs des actions du pare-feu */
+.bloque {
+    color: #1f7a34;
+    font-weight: bold;
+}
+
+.autorise {
+    color: #c22b2b;
+    font-weight: bold;
+}
+
+/* Statut "en ligne / conforme" */
+.ok {
+    color: #1f7a34;
+    font-weight: bold;
+}
+
+/* Message "aucun résultat" (masqué par défaut, affiché par le JS) */
+.aucun-resultat {
+    display: none;
+    margin-top: 14px;
+    padding: 12px;
+    text-align: center;
+    font-size: 13px;
+    color: #123a66;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px dashed #7fa8d0;
+    border-radius: 6px;
+}
+
+/* -----------------------------------------------------------------
+   FOOTER
+   ----------------------------------------------------------------- */
+.footer {
+    text-align: center;
+    padding: 14px;
+    font-size: 13px;
+    color: #123a66;
+}
+
+/* =================================================================
+   RESPONSIVE DESIGN (Media Queries) — adaptation tablette/mobile
+   ================================================================= */
+
+/* ---------- TABLETTE : jusqu'à 768px ---------- */
+@media (max-width: 768px) {
+    .main {
+        grid-template-columns: 1fr; /* une seule colonne */
+    }
+    .aside {
+        width: 100%;
+    }
+    .events {
+        overflow-x: auto; /* le tableau défile dans sa carte */
+    }
+}
+
+/* ---------- SMARTPHONE : jusqu'à 480px ---------- */
+@media (max-width: 480px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .kpi {
+        flex-direction: column;
+        gap: 5px;
+    }
+    body {
+        padding: 10px;
+    }
+    .header h1 {
+        font-size: 19px;
+    }
+    thead th,
+    tbody td {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
