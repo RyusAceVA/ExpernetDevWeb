@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!--
+=====================================================================
+  TP04 — Template d'Emailing d'Alerte SOC / NOC  (LIVRABLE)
+  Alerte : saturation disque 96% sur /dev/sda3 (SRV-DB-PROD-01)
+  ---------------------------------------------------------------
+  CONTRAINTES RESPECTÉES (cahier des charges) :
+   1. AUCUNE balise <link> ni <style> globale. Tout le style est en
+      INLINE (attribut style="") sur chaque balise -> compat. maximale
+      Outlook / Gmail / Apple Mail.
+   2. Mise en page 100% en TABLEAUX (<table>/<tr>/<td>), zéro Flexbox,
+      zéro CSS Grid.
+   3. Tableau principal 100% (fond sombre) + sous-tableau conteneur
+      width:100% limité par max-width:600px (pas de scroll horizontal).
+   4. Bandeau d'en-tête ROUGE VIF #dc2626 = criticité.
+   5. Variables système en police MONOSPACE (rendu terminal CLI) et en
+      TEXTE (visibles même si les images distantes sont bloquées).
+   6. Bouton CTA = cellule de tableau stylisée (padding, fond, texte
+      blanc), cliquable au doigt.
+=====================================================================
+-->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[CRITIQUE] Saturation disque 96% — SRV-DB-PROD-01</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0b1220;">
+
+    <!-- Texte de pré-en-tête (aperçu dans la boîte de réception, masqué à l'ouverture) -->
+    <div style="display:none; max-height:0; overflow:hidden; opacity:0; color:#0b1220; font-size:1px; line-height:1px;">
+        CRITIQUE — /dev/sda3 à 96% sur SRV-DB-PROD-01. Intervention immédiate requise.
+    </div>
+
+    <!-- =============================================================
+         TABLEAU PRINCIPAL DE CENTRAGE (100% largeur, fond sombre)
+         ============================================================= -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+           style="width:100%; background-color:#0b1220; margin:0; padding:0;">
+        <tr>
+            <td align="center" style="padding:24px 12px;">
+
+                <!-- =====================================================
+                     SOUS-TABLEAU CONTENEUR : width 100% mais max 600px
+                     ===================================================== -->
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"
+                       style="width:100%; max-width:600px; background-color:#ffffff; border-radius:10px; overflow:hidden; border:1px solid #cbd5e1; font-family:'Segoe UI', Tahoma, Arial, sans-serif;">
+
+                    <!-- =================================================
+                         EN-TÊTE : bandeau rouge vif #dc2626 (CRITIQUE)
+                         bgcolor = repli solide ; background-image = reflet
+                         ================================================= -->
+                    <tr>
+                        <td bgcolor="#dc2626" align="left"
+                            style="background-color:#dc2626; background-image:linear-gradient(to bottom, #ef4444 0%, #dc2626 55%, #b91c1c 100%); padding:18px 24px;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <!-- Pictogramme "danger" en texte (résilient, pas une image) -->
+                                    <td width="42" valign="middle"
+                                        style="font-size:30px; line-height:30px; color:#ffffff;">&#9888;</td>
+                                    <td valign="middle" style="padding-left:10px;">
+                                        <div style="font-size:18px; font-weight:700; color:#ffffff; text-shadow:0 1px 0 rgba(0,0,0,0.25);">
+                                            ALERTE CRITIQUE — SOC / NOC
+                                        </div>
+                                        <div style="font-size:12px; color:#fee2e2; margin-top:2px;">
+                                            Infratech · Supervision infrastructure
+                                        </div>
+                                    </td>
+                                    <td align="right" valign="middle"
+                                        style="font-size:11px; font-weight:700; color:#7f1d1d; background-color:#fecaca; padding:4px 10px; border-radius:12px; white-space:nowrap;">
+                                        SEV-1
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- =================================================
+                         CORPS DU MESSAGE
+                         ================================================= -->
+                    <tr>
+                        <td style="padding:24px;">
+
+                            <!-- Titre de l'incident -->
+                            <p style="margin:0 0 6px 0; font-size:20px; font-weight:700; color:#0f172a;">
+                                Saturation critique de l'espace disque
+                            </p>
+                            <p style="margin:0 0 18px 0; font-size:14px; line-height:1.5; color:#334155;">
+                                Le volume <strong>/dev/sda3</strong> du serveur de base de données de
+                                production a franchi le seuil critique d'occupation. Une intervention
+                                immédiate est requise pour éviter l'arrêt du service.
+                            </p>
+
+                            <!-- =============================================
+                                 BLOC "TERMINAL" — variables système en
+                                 MONOSPACE et en TEXTE (résilience totale)
+                                 ============================================= -->
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                                   style="background-color:#0b1220; border-radius:8px; border:1px solid #1e293b;">
+                                <tr>
+                                    <td style="padding:16px 18px; font-family:'Consolas','Courier New',monospace; font-size:13px; line-height:1.7; color:#e2e8f0; word-break:break-word;">
+                                        <span style="color:#22c55e;">soc@infra</span><span style="color:#64748b;">:</span><span style="color:#38bdf8;">~</span><span style="color:#64748b;">$</span> df -h /dev/sda3<br>
+                                        <span style="color:#e2e8f0;">/dev/sda3&nbsp;&nbsp;480G/500G&nbsp;&nbsp;</span><span style="color:#f87171; font-weight:700;">96%</span><span style="color:#e2e8f0;">&nbsp;&nbsp;/</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Tableau récapitulatif des variables (texte pur) -->
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
+                                <tr>
+                                    <td width="130" style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; color:#64748b;">Hôte</td>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; font-weight:700; color:#0f172a;">SRV-DB-PROD-01</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; color:#64748b; border-top:1px solid #e2e8f0;">Adresse IP</td>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; font-weight:700; color:#0f172a; border-top:1px solid #e2e8f0;">10.20.30.11</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; color:#64748b; border-top:1px solid #e2e8f0;">Partition</td>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; font-weight:700; color:#0f172a; border-top:1px solid #e2e8f0;">/dev/sda3</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; color:#64748b; border-top:1px solid #e2e8f0;">Occupation</td>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; font-weight:700; color:#dc2626; border-top:1px solid #e2e8f0;">96% (CRITIQUE)</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; color:#64748b; border-top:1px solid #e2e8f0;">Détecté à</td>
+                                    <td style="padding:7px 0; font-family:'Consolas','Courier New',monospace; font-size:13px; font-weight:700; color:#0f172a; border-top:1px solid #e2e8f0;">02:47 UTC</td>
+                                </tr>
+                            </table>
+
+                            <!-- =============================================
+                                 BOUTON CTA = cellule de tableau stylisée
+                                 (padding, fond, texte blanc, cliquable doigt)
+                                 ============================================= -->
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:26px 0 8px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td bgcolor="#2563eb" align="center"
+                                                    style="background-color:#2563eb; background-image:linear-gradient(to bottom, #60a5fa 0%, #2563eb 52%, #1d4ed8 100%); border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.25);">
+                                                    <a href="https://console.infratech.local/ssh?host=SRV-DB-PROD-01"
+                                                       target="_blank"
+                                                       style="display:block; min-height:24px; padding:14px 34px; font-family:'Segoe UI', Tahoma, Arial, sans-serif; font-size:15px; font-weight:700; color:#ffffff; text-decoration:none; text-shadow:0 -1px 0 rgba(0,0,0,0.3);">
+                                                        &#128421;&nbsp; Ouvrir la console SSH web
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin:12px 0 0 0; font-size:12px; line-height:1.5; color:#64748b; text-align:center;">
+                                Purgez les journaux (<span style="font-family:'Consolas','Courier New',monospace;">/var/log</span>)
+                                ou étendez le volume LVM. Si le lien ne s'ouvre pas, connectez-vous manuellement au
+                                dashboard d'administration.
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- =================================================
+                         PIED DE PAGE
+                         ================================================= -->
+                    <tr>
+                        <td bgcolor="#f1f5f9" style="background-color:#f1f5f9; padding:18px 24px; border-top:1px solid #e2e8f0;">
+                            <p style="margin:0 0 4px 0; font-size:11px; line-height:1.6; color:#64748b;">
+                                Message automatique généré par le script de supervision
+                                <span style="font-family:'Consolas','Courier New',monospace;">soc-alert.sh</span> —
+                                Ne pas répondre à cet e-mail.
+                            </p>
+                            <p style="margin:0; font-size:11px; line-height:1.6; color:#94a3b8;">
+                                Infratech SOC/NOC · Astreinte 24/7 · poste #4000 &nbsp;|&nbsp; Ref. incident : INC-2026-0702-96
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                <!-- /conteneur 600px -->
+
+            </td>
+        </tr>
+    </table>
+    <!-- /tableau principal -->
+
+</body>
+</html>

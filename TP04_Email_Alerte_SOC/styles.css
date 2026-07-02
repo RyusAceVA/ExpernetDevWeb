@@ -1,0 +1,322 @@
+/* =================================================================
+   STYLES.CSS — Client "Zindozs Mail" (habillage Windows Vista Aero)
+   Ce fichier ne concerne QUE la vitrine (index.html). Le livrable
+   noté est email.html (tables + CSS inline).
+   ================================================================= */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #10233b;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 18% 12%, rgba(140, 210, 255, 0.55), transparent 42%),
+        radial-gradient(circle at 82% 88%, rgba(90, 255, 210, 0.28), transparent 40%),
+        linear-gradient(160deg, #2e7bd6 0%, #14508f 45%, #05193a 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+.bureau {
+    min-height: 100vh;
+    padding: clamp(12px, 3vw, 40px);
+    padding-bottom: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* ---------- Sidebar / gadgets ---------- */
+.sidebar {
+    position: absolute;
+    top: 22px; right: 22px;
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 1;
+}
+.gadget {
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.7);
+    padding: 12px;
+    text-align: center;
+    color: #eaf3ff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+.gadget-titre { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85; }
+.gadget-gros { font-size: 14px; font-weight: 700; margin: 6px 0; }
+.gadget-gros.ok { color: #9dffce; }
+.gadget-sous { font-size: 11px; opacity: 0.9; margin-top: 6px; }
+.jauge { height: 10px; border-radius: 6px; background: rgba(0,0,0,0.25);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.4); overflow: hidden; }
+.jauge span { display: block; height: 100%;
+    background: linear-gradient(to bottom, #9dffce, #35c96f);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7); }
+.jauge-crit span { background: linear-gradient(to bottom, #ff9a9a, #dc2626); }
+
+/* =================================================================
+   FENÊTRE AERO
+   ================================================================= */
+.fenetre {
+    width: min(1120px, 100%);
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.7);
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+.fenetre::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 120px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0));
+    pointer-events: none; z-index: 3;
+}
+
+/* ---------- Barre de titre ---------- */
+.titlebar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.45), rgba(150,205,255,0.28));
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    position: relative; z-index: 4;
+}
+.titlebar-gauche { display: flex; align-items: center; gap: 10px; }
+.titlebar-texte { color: #0c2f5a; font-size: 14px; font-weight: 600;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8); }
+.logo-vista {
+    position: relative; width: 26px; height: 26px;
+    display: inline-grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    gap: 2px; transform: perspective(120px) rotateY(-12deg) rotateZ(-4deg);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+.carreau { border-radius: 3px 3px 4px 4px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -2px 3px rgba(0,0,0,0.15); }
+.c1 { background: linear-gradient(135deg, #ff8a8a, #e23b3b); }
+.c2 { background: linear-gradient(135deg, #9bffa4, #2fae4a); }
+.c3 { background: linear-gradient(135deg, #8cc9ff, #1f74d6); }
+.c4 { background: linear-gradient(135deg, #ffe185, #f2b721); }
+.titlebar-boutons { display: flex; gap: 6px; }
+.win-btn {
+    width: 30px; height: 22px; border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 5px; font-size: 12px; color: #0c2f5a; cursor: pointer;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(180,215,255,0.5));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.win-btn:hover { background: linear-gradient(to bottom, #cfe6ff, #9cc6f5); }
+.win-btn.close { background: linear-gradient(to bottom, #ff8f7a, #e2452c); color: #fff; border-color: #b8321d; }
+
+/* ---------- Barre d'outils ---------- */
+.toolbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    background: linear-gradient(to bottom, rgba(230,240,255,0.65), rgba(200,222,250,0.45));
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    position: relative; z-index: 4;
+}
+.tool-btn {
+    padding: 6px 12px; font-size: 12px; color: #0c2f5a; cursor: pointer;
+    border: 1px solid rgba(120,160,210,0.6); border-radius: 6px;
+    background: linear-gradient(to bottom, #ffffff, #dbe9fb);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.tool-btn:hover { background: linear-gradient(to bottom, #ffffff, #c5ddf7); }
+.tool-btn.danger { color: #a11; border-color: #e0a3a3; }
+.toolbar-compte { margin-left: auto; font-size: 12px; color: #234; opacity: 0.8; }
+
+/* =================================================================
+   CORPS : 3 volets
+   ================================================================= */
+.mail-body {
+    display: grid;
+    grid-template-columns: 190px 290px 1fr;
+    height: 560px;
+    position: relative; z-index: 4;
+}
+
+/* ---------- Volet dossiers ---------- */
+.volet-dossiers {
+    padding: 12px 8px;
+    background: rgba(20, 60, 110, 0.28);
+    border-right: 1px solid rgba(255,255,255,0.25);
+}
+.dossier {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 10px; margin-bottom: 3px;
+    font-size: 13px; color: #eaf3ff; border-radius: 6px; cursor: pointer;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+.dossier:hover { background: rgba(255,255,255,0.14); }
+.dossier.actif { background: rgba(255,255,255,0.22);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4); font-weight: 600; }
+.badge { margin-left: auto; font-size: 11px; background: rgba(255,255,255,0.3);
+    color: #0c2f5a; padding: 1px 7px; border-radius: 10px; }
+.badge.rouge { background: #dc2626; color: #fff; }
+
+/* ---------- Volet liste ---------- */
+.volet-liste {
+    list-style: none; overflow-y: auto;
+    background: rgba(255,255,255,0.55);
+    border-right: 1px solid rgba(255,255,255,0.4);
+}
+.msg {
+    padding: 12px 14px; border-bottom: 1px solid rgba(12,47,90,0.12);
+    cursor: pointer; position: relative;
+}
+.msg:hover { background: rgba(120,190,255,0.20); }
+.msg.actif { background: rgba(120,190,255,0.35);
+    box-shadow: inset 3px 0 0 #2563eb; }
+.msg-prio { position: absolute; top: 14px; right: 14px;
+    width: 8px; height: 8px; border-radius: 50%; background: #dc2626;
+    box-shadow: 0 0 6px rgba(220,38,38,0.8); }
+.msg-ligne1 { display: flex; justify-content: space-between; }
+.msg-exp { font-size: 13px; font-weight: 700; color: #0c2f5a; }
+.msg-heure { font-size: 11px; color: #5b7495; }
+.msg-obj { font-size: 12.5px; color: #17324f; margin-top: 3px; font-weight: 600; }
+.msg-apercu { font-size: 11.5px; color: #5b7495; margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- Volet lecture ---------- */
+.volet-lecture {
+    display: flex; flex-direction: column;
+    background: rgba(240, 246, 253, 0.92);
+    overflow: hidden;
+}
+.lecture-entete {
+    padding: 16px 20px 12px; border-bottom: 1px solid rgba(12,47,90,0.15);
+    background: rgba(255,255,255,0.6);
+}
+.lecture-objet { font-size: 16px; color: #0c2f5a; margin-bottom: 6px; }
+.lecture-meta { font-size: 12px; color: #334; }
+.lecture-date { color: #5b7495; margin-left: 6px; }
+.lecture-dest { color: #5b7495; margin-top: 2px; }
+
+.banniere-images {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 8px 20px; font-size: 12px; color: #7a5b00;
+    background: #fff4d6; border-bottom: 1px solid #f0d98a;
+}
+.banniere-images button {
+    padding: 4px 12px; font-size: 12px; font-weight: 600; cursor: pointer;
+    color: #0c2f5a; background: linear-gradient(to bottom, #fff, #dbe9fb);
+    border: 1px solid #9cc6f5; border-radius: 5px;
+}
+.banniere-images.masquee { display: none; }
+
+.lecture-corps { flex: 1 1 auto; overflow-y: auto; overflow-x: hidden; }
+.mail-scroll { min-height: 100%; }
+
+.lecture-autre {
+    flex: 1 1 auto; display: grid; place-items: center; text-align: center;
+    padding: 40px; font-size: 14px; color: #5b7495; line-height: 1.6;
+}
+/* Le [hidden] doit l'emporter sur le display:grid ci-dessus */
+.lecture-autre[hidden], .lecture-corps[hidden] { display: none; }
+
+/* =================================================================
+   BARRE DES TÂCHES
+   ================================================================= */
+.taskbar {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 48px;
+    display: flex; align-items: center; gap: 8px; padding: 0 8px 0 0;
+    background: linear-gradient(to bottom,
+        rgba(70,120,180,0.55) 0%, rgba(15,40,75,0.78) 40%, rgba(5,20,45,0.88) 100%);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    border-top: 1px solid rgba(255,255,255,0.35);
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.4); z-index: 100;
+}
+.orbe {
+    flex: 0 0 auto; width: 54px; height: 54px; margin: -6px 6px -6px -2px;
+    border-radius: 50%; border: 2px solid rgba(255,255,255,0.7); cursor: pointer;
+    background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.9), transparent 45%),
+                radial-gradient(circle at 50% 60%, #2f86e6, #0c3b78 75%);
+    box-shadow: 0 0 12px rgba(90,170,255,0.8), inset 0 2px 4px rgba(255,255,255,0.6),
+                inset 0 -4px 8px rgba(0,0,0,0.4);
+    display: grid; place-items: center;
+}
+.orbe:hover { box-shadow: 0 0 20px rgba(120,190,255,1), inset 0 2px 4px rgba(255,255,255,0.7),
+    inset 0 -4px 8px rgba(0,0,0,0.4); }
+.orbe-logo {
+    position: relative; width: 24px; height: 24px;
+    display: inline-grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    gap: 2px; transform: perspective(100px) rotateY(-14deg);
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+.taskbar-apps { display: flex; gap: 6px; flex: 1 1 auto; min-width: 0; }
+.task-app {
+    display: flex; align-items: center; gap: 8px; max-width: 240px;
+    padding: 6px 12px; height: 34px; cursor: pointer; color: #eaf3ff; font-size: 12px;
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 6px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.task-app.active { background: linear-gradient(to bottom, rgba(150,205,255,0.45), rgba(60,120,190,0.35));
+    border-color: rgba(255,255,255,0.5); }
+.task-app:hover { background: linear-gradient(to bottom, rgba(180,220,255,0.4), rgba(90,150,210,0.3)); }
+.task-ic { font-size: 15px; }
+.tray { flex: 0 0 auto; display: flex; align-items: center; gap: 10px;
+    padding: 4px 10px; border-left: 1px solid rgba(255,255,255,0.25); }
+.tray-ic { font-size: 15px; color: #dcebff; }
+.tray-ic.secu { color: #ff9a9a; }
+.tray-horloge { display: flex; flex-direction: column; align-items: center; line-height: 1.1;
+    color: #eaf3ff; text-shadow: 0 1px 1px rgba(0,0,0,0.5); }
+.tray-heure { font-size: 13px; font-weight: 600; }
+.tray-date { font-size: 10px; opacity: 0.85; }
+
+/* =================================================================
+   OVERLAY "CONSOLE SSH" (déclenché par le CTA de l'e-mail)
+   ================================================================= */
+.overlay {
+    position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center;
+    padding: 20px; background: rgba(5,15,40,0.5);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    animation: fadein 0.2s ease;
+}
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.overlay[hidden] { display: none; }
+.console-fenetre {
+    width: min(680px, 100%);
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.console-titre {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; font-size: 13px; font-weight: 600; color: #eaf3ff;
+    background: linear-gradient(to bottom, rgba(70,120,180,0.9), rgba(15,40,75,0.95));
+}
+.console-titre .win-btn { margin-left: auto; }
+.console-sortie {
+    margin: 0; padding: 16px 18px; min-height: 220px;
+    font-family: "Consolas", "Courier New", monospace; font-size: 13px; line-height: 1.6;
+    color: #e2e8f0; background: #0b1220; white-space: pre-wrap;
+}
+
+/* =================================================================
+   RESPONSIVE
+   ================================================================= */
+@media (max-width: 900px) {
+    .sidebar { display: none; }
+    .mail-body { grid-template-columns: 1fr; height: auto; }
+    .volet-dossiers { display: none; }
+    .volet-liste { max-height: 200px; }
+    #mail-frame { height: 70vh; }
+}
+@media (max-width: 600px) {
+    .bureau { padding: 8px; padding-bottom: 60px; }
+    .toolbar-compte { display: none; }
+    .task-label { display: none; }
+    .titlebar-texte { font-size: 12px; }
+}
